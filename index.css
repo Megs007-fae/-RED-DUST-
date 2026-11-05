@@ -1,0 +1,1826 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #070b14;
+  color: #e2e8f0;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.dashboard {
+  min-height: 100vh;
+  padding: 35px;
+  background:
+    radial-gradient(
+      ellipse at top right,
+      rgba(15, 48, 75, 0.35),
+      transparent 45%
+    ),
+    #070b14;
+}
+
+.mission-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #263449;
+}
+
+.eyebrow {
+  color: #38bdf8;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  margin-bottom: 12px;
+}
+
+.mission-header h1 {
+  font-size: clamp(25px, 4vw, 36px);
+  letter-spacing: 2px;
+  color: #f8fafc;
+}
+
+.mission-subtitle {
+  margin-top: 9px;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.system-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #4ade80;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+}
+
+.status-dot {
+  height: 9px;
+  width: 9px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 12px #4ade80;
+}
+
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.telemetry-card {
+  padding: 23px;
+  background: #111c2e;
+  border: 1px solid #263449;
+  border-radius: 9px;
+  min-width: 0;
+}
+
+.primary-card {
+  border-top: 2px solid #38bdf8;
+}
+
+.card-label {
+  color: #94a3b8;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+.telemetry-card h2 {
+  margin-top: 17px;
+  font-size: clamp(23px, 3vw, 30px);
+  color: #f8fafc;
+}
+
+.telemetry-card h2 span {
+  color: #38bdf8;
+  font-size: 14px;
+}
+
+.card-detail {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.danger-text {
+  color: #ef4444 !important;
+}
+
+.chart-panel {
+  margin-top: 30px;
+  padding: 27px;
+  background: #111c2e;
+  border: 1px solid #263449;
+  border-radius: 10px;
+}
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.panel-heading h2 {
+  font-size: 17px;
+  letter-spacing: 1px;
+}
+
+.unit-label {
+  font-size: 10px;
+  color: #38bdf8;
+  border: 1px solid #1e4962;
+  padding: 7px 12px;
+  border-radius: 4px;
+}
+
+.chart-container {
+  height: 350px;
+  width: 100%;
+}
+
+.chart-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.threshold-label {
+  color: #f87171;
+}
+
+.storm-warning {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 25px;
+  padding: 20px;
+  background: rgba(127, 29, 29, 0.25);
+  border: 1px solid #ef4444;
+  border-left: 5px solid #ef4444;
+  border-radius: 8px;
+  animation: warningFlash 1s infinite;
+}
+
+.warning-symbol {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ef4444;
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.storm-warning h2 {
+  color: #f87171;
+  font-size: 17px;
+  letter-spacing: 2px;
+}
+
+.storm-warning p {
+  margin-top: 6px;
+  color: #fecaca;
+  font-size: 12px;
+}
+
+@keyframes warningFlash {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
+  }
+
+  50% {
+    opacity: 0.55;
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.45);
+  }
+}
+
+.loading-panel {
+  margin-top: 40px;
+  padding: 35px;
+  text-align: center;
+  color: #38bdf8;
+  background: #111c2e;
+  border-radius: 8px;
+  letter-spacing: 2px;
+}
+
+.error-panel {
+  color: #f87171;
+}
+
+.mission-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #263449;
+  color: #64748b;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 950px) {
+  .telemetry-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 550px) {
+  .dashboard {
+    padding: 18px;
+  }
+
+  .telemetry-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-panel {
+    padding: 17px;
+  }
+
+  .chart-container {
+    height: 280px;
+  }
+
+  .mission-footer {
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .storm-warning {
+    animation: none;
+  }
+}
+/* LIVE MISSION TELEMETRY */
+
+.live-telemetry {
+  margin-top: 22px;
+  padding: 24px;
+  background: linear-gradient(135deg, #111c2e, #0b1424);
+  border: 1px solid #263449;
+  border-radius: 10px;
+}
+
+.live-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #38bdf8;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+}
+
+.live-indicator {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 12px #4ade80;
+}
+
+.live-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.live-grid p {
+  color: #94a3b8;
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.live-grid h2 {
+  color: #f8fafc;
+  font-size: 20px;
+  overflow-wrap: anywhere;
+}
+
+.normal-text {
+  color: #4ade80 !important;
+}
+
+@media (max-width: 750px) {
+  .live-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 450px) {
+  .live-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.stable-text {
+  color: #38bdf8 !important;
+}
+/* MISSION EVENT LOG */
+
+.event-panel {
+  margin-top: 25px;
+  padding: 27px;
+  background: #111c2e;
+  border: 1px solid #263449;
+  border-radius: 10px;
+}
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 17px 5px;
+  border-bottom: 1px solid #263449;
+}
+
+.event-row:last-child {
+  border-bottom: none;
+}
+
+.event-indicator {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.event-indicator.critical {
+  background: #ef4444;
+  box-shadow: 0 0 10px #ef4444;
+}
+
+.event-indicator.nominal {
+  background: #4ade80;
+  box-shadow: 0 0 10px #4ade80;
+}
+
+.event-details {
+  flex: 1;
+}
+
+.event-details h3 {
+  font-size: 12px;
+  color: #e2e8f0;
+  letter-spacing: 0.8px;
+}
+
+.event-details p {
+  margin-top: 6px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.event-status {
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.event-status.critical {
+  color: #f87171;
+}
+
+.event-status.nominal {
+  color: #4ade80;
+}
+
+@media (max-width: 550px) {
+  .event-panel {
+    padding: 17px;
+  }
+
+  .event-status {
+    font-size: 9px;
+  }
+}
+/* ENVIRONMENTAL STATUS PANEL */
+
+.environment-panel {
+  margin-top: 22px;
+  padding: 27px;
+  background: linear-gradient(135deg, #111c2e, #0b1424);
+  border: 1px solid #263449;
+  border-radius: 10px;
+}
+
+.environment-badge {
+  padding: 8px 12px;
+  border: 1px solid #263449;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.environment-badge.danger-text {
+  color: #f87171;
+  border-color: #7f1d1d;
+  background: rgba(127, 29, 29, 0.2);
+}
+
+.environment-badge.normal-text {
+  color: #4ade80;
+  border-color: #166534;
+  background: rgba(22, 101, 52, 0.2);
+}
+
+.environment-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.environment-item {
+  padding: 18px;
+  background: rgba(7, 11, 20, 0.5);
+  border: 1px solid #263449;
+  border-radius: 7px;
+}
+
+.environment-item p {
+  color: #94a3b8;
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.environment-item h3 {
+  color: #e2e8f0;
+  font-size: 14px;
+}
+
+@media (max-width: 750px) {
+  .environment-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 450px) {
+  .environment-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* DATA INTEGRITY PANEL */
+
+.integrity-panel {
+  margin-top: 22px;
+  padding: 27px;
+  background: #111c2e;
+  border: 1px solid #263449;
+  border-radius: 10px;
+}
+
+.integrity-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.integrity-grid > div {
+  padding: 17px;
+  background: rgba(7, 11, 20, 0.5);
+  border: 1px solid #263449;
+  border-radius: 7px;
+  min-width: 0;
+}
+
+.integrity-grid p {
+  color: #94a3b8;
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.integrity-grid h3 {
+  color: #e2e8f0;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 750px) {
+  .integrity-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 450px) {
+  .integrity-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* MISSION CONTROL ANIMATIONS */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(56, 189, 248, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.4);
+  }
+}
+
+@keyframes radarPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* Dashboard entrance */
+
+.mission-header {
+  animation: fadeInUp 0.8s ease both;
+}
+
+.telemetry-card {
+  animation: fadeInUp 0.7s ease both;
+}
+
+.telemetry-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.telemetry-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.telemetry-card:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.live-telemetry,
+.environment-panel,
+.integrity-panel,
+.chart-panel,
+.event-panel {
+  animation: fadeInUp 0.9s ease both;
+}
+
+/* Hover effects */
+
+.telemetry-card,
+.environment-item,
+.integrity-grid > div {
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.telemetry-card:hover,
+.environment-item:hover,
+.integrity-grid > div:hover {
+  transform: translateY(-5px);
+  border-color: #38bdf8;
+}
+
+/* System indicator */
+
+.status-dot,
+.live-indicator {
+  animation: glowPulse 1.8s infinite;
+}
+
+/* Reduced motion accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* RADAR SCANNER */
+
+.radar-container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  color: #38bdf8;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.radar-circle {
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, transparent 49%, rgba(56, 189, 248, 0.2) 50%, transparent 51%),
+    linear-gradient(transparent 49%, rgba(56, 189, 248, 0.2) 50%, transparent 51%),
+    radial-gradient(circle, rgba(56, 189, 248, 0.12), transparent 70%);
+}
+
+.radar-circle::before,
+.radar-circle::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 50%;
+}
+
+.radar-circle::before {
+  inset: 8px;
+}
+
+.radar-circle::after {
+  inset: 16px;
+}
+
+.radar-sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(56, 189, 248, 0.5) 360deg
+  );
+  animation: radarRotate 3s linear infinite;
+}
+
+.radar-center {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: #38bdf8;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+@keyframes radarRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* ANIMATED TELEMETRY READINGS */
+
+@keyframes numberGlow {
+  0%, 100% {
+    text-shadow: 0 0 4px rgba(56, 189, 248, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 14px rgba(56, 189, 248, 0.7);
+  }
+}
+
+.telemetry-card h2,
+.live-telemetry h2,
+.environment-item h3 {
+  animation: numberGlow 3s ease-in-out infinite;
+}
+
+/* Subtle card glow */
+
+.telemetry-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.telemetry-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #38bdf8,
+    transparent
+  );
+  animation: scanLine 5s linear infinite;
+}
+
+@keyframes scanLine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  .telemetry-card h2,
+  .live-telemetry h2,
+  .environment-item h3,
+  .telemetry-card::after {
+    animation: none !important;
+  }
+}
+/* MARS ATMOSPHERIC BACKGROUND */
+
+body {
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(153, 65, 35, 0.16),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(30, 90, 130, 0.15),
+      transparent 40%
+    ),
+    #050b16;
+  background-size: 150% 150%;
+  animation: marsAtmosphere 15s ease-in-out infinite alternate;
+}
+
+@keyframes marsAtmosphere {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+/* Subtle panel depth */
+
+.telemetry-card,
+.live-telemetry,
+.environment-panel,
+.integrity-panel,
+.chart-panel,
+.event-panel {
+  backdrop-filter: blur(8px);
+}
+
+/* Reduced motion support */
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    animation: none !important;
+  }
+}
+.dashboard {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      ellipse at 10% 15%,
+      rgba(255, 75, 30, 0.38),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 90% 85%,
+      rgba(20, 110, 200, 0.35),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(120, 45, 35, 0.18),
+      transparent 65%
+    ),
+    #050814;
+  background-size: 200% 200%;
+  animation: marsAtmosphere 8s ease-in-out infinite alternate;
+}
+
+@keyframes marsAtmosphere {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+/* CINEMATIC STORM WARNING */
+
+@keyframes stormPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 40, 40, 0.25);
+    border-color: rgba(255, 60, 60, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 30px rgba(255, 40, 40, 0.7);
+    border-color: #ff3333;
+  }
+}
+
+@keyframes warningSweep {
+  from {
+    transform: translateX(-150%);
+  }
+
+  to {
+    transform: translateX(350%);
+  }
+}
+
+.storm-warning {
+  position: relative;
+  overflow: hidden;
+  animation: stormPulse 1.8s ease-in-out infinite;
+  border: 1px solid rgba(255, 60, 60, 0.5);
+}
+
+.storm-warning::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+  animation: warningSweep 3s linear infinite;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .storm-warning,
+  .storm-warning::after {
+    animation: none !important;
+  }
+}
+/* SYSTEM ONLINE INDICATOR */
+
+@keyframes onlinePulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 5px #22c55e;
+  }
+  50% {
+    opacity: 0.45;
+    box-shadow: 0 0 15px #22c55e;
+  }
+}
+
+.status-dot {
+  animation: onlinePulse 1.5s ease-in-out infinite;
+}
+
+/* LIVE SYSTEM TEXT */
+
+.system-status {
+  color: #22c55e;
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  letter-spacing: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-dot {
+    animation: none;
+  }
+}
+/* DEEP SPACE STARFIELD */
+
+.dashboard {
+  position: relative;
+  isolation: isolate;
+}
+
+.dashboard::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, #ffffff 70%, transparent),
+    radial-gradient(1.5px 1.5px at 70% 20%, #ffffff 70%, transparent),
+    radial-gradient(2px 2px at 45% 75%, #ffffff 70%, transparent),
+    radial-gradient(1px 1px at 85% 65%, #ffffff 70%, transparent),
+    radial-gradient(1.5px 1.5px at 10% 85%, #ffffff 70%, transparent);
+
+  background-size: 250px 250px;
+  opacity: 0.45;
+  animation: starDrift 35s linear infinite;
+}
+
+@keyframes starDrift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-250px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard::before {
+    animation: none;
+  }
+}
+/* PRESSURE THRESHOLD ANALYSIS */
+
+/* PRESSURE THRESHOLD ANALYSIS */
+
+
+/* PREMIUM PRESSURE THRESHOLD PANEL */
+
+.comparison-panel {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 30px;
+  margin: 30px 0;
+  background:
+    linear-gradient(135deg, rgba(12, 29, 53, 0.98), rgba(5, 14, 30, 0.98));
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 16px;
+  box-shadow:
+    0 0 25px rgba(56, 189, 248, 0.08),
+    inset 0 0 25px rgba(56, 189, 248, 0.025);
+}
+
+.comparison-panel h2 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  color: #38bdf8;
+  margin: 0 0 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.18);
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+}
+
+.comparison-item {
+  min-width: 0;
+  min-height: 145px;
+  box-sizing: border-box;
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(
+    145deg,
+    rgba(20, 43, 70, 0.95),
+    rgba(10, 24, 43, 0.95)
+  );
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.comparison-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 189, 248, 0.65);
+  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.12);
+}
+
+.comparison-item span {
+  display: block;
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 0.9px;
+  color: #94a3b8;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.comparison-item h3 {
+  font-size: 17px;
+  line-height: 1.5;
+  font-weight: 700;
+  margin: 14px 0 0;
+  color: #e2e8f0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1000px) {
+  .comparison-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 500px) {
+  .comparison-panel {
+    padding: 18px;
+  }
+
+  .comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .comparison-item {
+    min-height: 110px;
+  }
+}
+/* EXPAND PRESSURE PANEL WIDTH */
+
+.comparison-panel {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  padding: 30px 35px;
+  margin: 30px 0;
+}
+
+.comparison-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.comparison-item {
+  min-width: 0;
+  padding: 24px 20px;
+  min-height: 140px;
+}
+/* Pressure Level Indicator */
+
+.pressure-gauge {
+  margin-top: 30px;
+  padding: 22px;
+  background: rgba(3, 12, 27, 0.65);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 12px;
+}
+
+.gauge-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  color: #cbd5e1;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+}
+
+.gauge-heading span:last-child {
+  color: #38bdf8;
+  font-weight: bold;
+}
+
+.gauge-track {
+  position: relative;
+  height: 10px;
+  background: linear-gradient(
+    to right,
+    #ef4444 0%,
+    #ef4444 50%,
+    #38bdf8 50%,
+    #38bdf8 100%
+  );
+  border-radius: 20px;
+}
+
+.gauge-warning-zone {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: rgba(239, 68, 68, 0.35);
+  border-radius: 20px 0 0 20px;
+}
+
+.gauge-marker {
+  position: absolute;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  background: #ffffff;
+  border: 4px solid #facc15;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 18px #facc15;
+  transition: left 0.8s ease-in-out;
+  z-index: 10;
+}
+.gauge-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 13px;
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.gauge-labels span:nth-child(2) {
+  color: #f87171;
+  font-weight: bold;
+}
+.gauge-track.warning-active {
+  animation: gaugeWarning 1s ease-in-out infinite alternate;
+}
+
+@keyframes gaugeWarning {
+  from {
+    box-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
+  }
+  to {
+    box-shadow: 0 0 18px rgba(239, 68, 68, 0.9);
+  }
+}
+.telemetry-timestamp {
+  margin-top: 8px;
+  margin-bottom: 15px;
+  color: #64748b;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-align: right;
+}
+.gauge-status {
+  margin-top: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-align: right;
+}
+
+.gauge-status.danger-text {
+  animation: warningFlash 1.2s infinite;
+}
+.mission-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 22px 25px;
+  margin-top: 35px;
+  border-top: 1px solid rgba(56, 189, 248, 0.2);
+  background: rgba(5, 14, 30, 0.65);
+  color: #94a3b8;
+  font-size: 10px;
+  letter-spacing: 1.3px;
+}
+
+.mission-footer span:first-child {
+  color: #38bdf8;
+  font-weight: 700;
+}
+/* MARS MISSION HEADER */
+
+.mission-header {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  padding: 45px 35px;
+  margin-bottom: 30px;
+
+  background:
+    linear-gradient(
+      115deg,
+      rgba(65, 31, 24, 0.95),
+      rgba(25, 17, 16, 0.96)
+    );
+
+  border: 1px solid rgba(217, 119, 69, 0.35);
+  border-radius: 20px;
+
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.35),
+    inset 0 1px rgba(255, 190, 140, 0.08);
+}
+
+.mission-identity {
+  flex: 1;
+  min-width: 250px;
+}
+
+.mission-designation {
+  color: #d97745;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 15px;
+}
+
+.mission-designation span {
+  color: #f2b36d;
+}
+
+.mission-header h1 {
+  font-size: clamp(27px, 4vw, 46px);
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin: 0;
+  color: #f4b183;
+}
+
+.mission-header h1 span {
+  color: #a84d32;
+}
+
+.mission-subtitle {
+  color: #c5a18c;
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin-top: 12px;
+}
+
+.mission-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.mission-meta span {
+  padding: 8px 11px;
+  background: rgba(217, 119, 69, 0.1);
+  border: 1px solid rgba(217, 119, 69, 0.2);
+  border-radius: 6px;
+  color: #d9a17e;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.mission-header-status {
+  text-align: right;
+}
+
+.mission-location {
+  color: #a98b7c;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  margin-top: 12px;
+}
+
+.mission-header .radar-container {
+  flex-basis: 100%;
+  margin-top: 5px;
+}
+
+@media (max-width: 600px) {
+  .mission-header {
+    padding: 28px 20px;
+    gap: 20px;
+  }
+
+  .mission-header-status {
+    text-align: left;
+  }
+
+  .mission-meta {
+    gap: 8px;
+  }
+}
+/* RESTORE CONSISTENT MARS THEME */
+
+.telemetry-card,
+.live-telemetry,
+.environment-panel,
+.integrity-panel,
+.chart-panel,
+.event-panel,
+.comparison-panel {
+  background: linear-gradient(
+    145deg,
+    #2b1b18,
+    #171211
+  ) !important;
+
+  border: 1px solid rgba(217, 119, 69, 0.28) !important;
+}
+
+/* Keep headings warm and readable */
+
+.live-telemetry h2,
+.environment-panel h2,
+.integrity-panel h2,
+.chart-panel h2,
+.event-panel h2,
+.comparison-panel h2 {
+  color: #f2c19b !important;
+}
+
+/* Restore the original Mars background */
+
+.dashboard {
+  background:
+    radial-gradient(
+      ellipse at 15% 10%,
+      rgba(153, 55, 32, 0.32),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 85% 80%,
+      rgba(201, 91, 48, 0.18),
+      transparent 45%
+    ),
+    #100c0b !important;
+}
+
+/* Keep the header visually distinct */
+
+.mission-header {
+  background: linear-gradient(
+    115deg,
+    #411f18,
+    #191110
+  ) !important;
+}
+/* PRESSURE THRESHOLD ANALYSIS — MARS THEME */
+
+.comparison-panel {
+  background: linear-gradient(
+    145deg,
+    #3b211a,
+    #211512
+  ) !important;
+
+  border: 1px solid rgba(217, 119, 69, 0.45) !important;
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.35),
+    inset 0 0 25px rgba(217, 119, 69, 0.04) !important;
+}
+
+.comparison-panel h2 {
+  color: #f4b183 !important;
+}
+
+.comparison-item {
+  background: linear-gradient(
+    145deg,
+    rgba(103, 52, 35, 0.45),
+    rgba(40, 23, 19, 0.85)
+  ) !important;
+
+  border: 1px solid rgba(217, 119, 69, 0.3) !important;
+}
+
+.comparison-item span {
+  color: #c99b80;
+}
+
+.comparison-item h3 {
+  color: #f2c19b;
+}
+/* MARS PRESSURE GAUGE */
+
+.pressure-gauge {
+  background: linear-gradient(
+    145deg,
+    rgba(65, 34, 25, 0.9),
+    rgba(29, 19, 16, 0.95)
+  ) !important;
+
+  border: 1px solid rgba(217, 119, 69, 0.3) !important;
+  border-radius: 12px;
+  box-shadow: inset 0 0 20px rgba(217, 119, 69, 0.04);
+}
+
+.gauge-heading {
+  color: #d9b19a !important;
+}
+
+.gauge-heading span:last-child {
+  color: #f2b36d !important;
+}
+
+.gauge-track {
+  background: linear-gradient(
+    to right,
+    #a83225 0%,
+    #a83225 50%,
+    #c76b3d 50%,
+    #e9a36e 100%
+  ) !important;
+
+  box-shadow: 0 0 12px rgba(217, 119, 69, 0.12);
+}
+
+.gauge-marker {
+  background: #fff3e6 !important;
+  border: 4px solid #f2b36d !important;
+  box-shadow: 0 0 18px rgba(242, 179, 109, 0.85) !important;
+}
+
+.gauge-labels {
+  color: #b99a87 !important;
+}
+
+.gauge-labels span:nth-child(2) {
+  color: #ff8066 !important;
+}
+
+.gauge-status.normal-text {
+  color: #e9a36e !important;
+}
+
+.telemetry-timestamp {
+  color: #a98b7c !important;
+}
+/* MARS TELEMETRY CARD THEME */
+
+.telemetry-card {
+  background: linear-gradient(
+    145deg,
+    #3b241d,
+    #1c1411
+  ) !important;
+
+  border: 1px solid rgba(217, 119, 69, 0.3) !important;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.3),
+    inset 0 1px rgba(255, 190, 140, 0.04);
+}
+
+.telemetry-card h2 {
+  color: #f2b36d !important;
+}
+
+.telemetry-card p,
+.telemetry-card span {
+  color: #c9a28c;
+}
+
+.telemetry-card:hover {
+  border-color: rgba(242, 179, 109, 0.7) !important;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.4),
+    0 0 18px rgba(217, 119, 69, 0.12);
+}
+/* Pressure level indicator */
+.pressure-gauge {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 28px;
+  padding: 24px;
+  background: #0c1d35;
+  border: 1px solid #38bdf8;
+  border-radius: 12px;
+}
+
+.gauge-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.gauge-track {
+  position: relative;
+  width: 100%;
+  height: 14px;
+  background: linear-gradient(
+    to right,
+    #ef4444 0%,
+    #ef4444 50%,
+    #22c55e 50%,
+    #22c55e 100%
+  );
+  border-radius: 20px;
+}
+
+.gauge-marker {
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 3px solid #38bdf8;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.gauge-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  color: #cbd5e1;
+  font-size: 12px;
+}
+.gauge-track {
+  background: linear-gradient(
+    to right,
+    #ef4444 0%,
+    #ef4444 50%,
+    #22c55e 50%,
+    #22c55e 100%
+  ) !important;
+}
+
+.gauge-marker {
+  background: #ffffff !important;
+  border: 3px solid #38bdf8 !important;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.9) !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+}
+
+.gauge-heading span:last-child {
+  color: #38bdf8 !important;
+}
+.gauge-marker.gauge-normal {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.9) !important;
+}
+
+.gauge-marker.gauge-critical {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.9) !important;
+  animation: warningMarkerPulse 1.2s infinite alternate;
+}
+
+@keyframes warningMarkerPulse {
+  from {
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+  }
+  to {
+    box-shadow: 0 0 22px rgba(239, 68, 68, 1);
+  }
+}
+.gauge-threshold {
+  position: absolute;
+  left: 50%;
+  top: -8px;
+  height: 30px;
+  width: 2px;
+  background: #ffffff;
+  box-shadow: 0 0 8px #ffffff;
+  z-index: 3;
+}
+.gauge-status {
+  margin-top: 22px;
+  padding: 12px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.gauge-status.normal {
+  color: #4ade80;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.gauge-status.critical {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+@media (max-width: 768px) {
+  .comparison-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pressure-gauge {
+    padding: 16px;
+  }
+
+  .gauge-heading {
+    font-size: 11px;
+  }
+
+  .gauge-labels {
+    font-size: 9px;
+  }
+
+  .gauge-status {
+    font-size: 10px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ADVANCED MISSION TELEMETRY */
+
+.live-telemetry {
+  position: relative;
+  padding: 30px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(9, 24, 46, 0.98), rgba(3, 10, 25, 0.98));
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 18px;
+  box-shadow:
+    0 0 30px rgba(0, 145, 255, 0.08),
+    inset 0 0 25px rgba(56, 189, 248, 0.025);
+}
+
+.live-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 25px;
+}
+
+.live-item {
+  position: relative;
+  min-width: 0;
+  min-height: 155px;
+  padding: 22px 16px;
+  overflow: hidden;
+  background: linear-gradient(
+    145deg,
+    rgba(18, 42, 69, 0.95),
+    rgba(6, 19, 37, 0.95)
+  );
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: 12px;
+  transition: all 0.35s ease;
+}
+
+.live-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #38bdf8,
+    transparent
+  );
+}
+
+.live-item:hover {
+  transform: translateY(-6px);
+  border-color: #38bdf8;
+  box-shadow: 0 0 22px rgba(56, 189, 248, 0.18);
+}
+
+.live-label {
+  display: block;
+  color: #7dd3fc;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  line-height: 1.5;
+}
+
+.live-item h2 {
+  margin-top: 22px;
+  color: #f1f5f9;
+  font-size: clamp(19px, 2vw, 27px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+}
+
+.live-item p {
+  margin-top: 10px;
+  color: #94a3b8;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.live-item .danger-text {
+  color: #fb5555;
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+}
+
+.live-item .normal-text {
+  color: #4ade80;
+}
+
+.live-item .stable-text {
+  color: #38bdf8;
+}
+
+@media (max-width: 1100px) {
+  .live-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .live-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .live-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* MARTIAN COPPER THEME */
+
+.live-telemetry {
+  background: linear-gradient(
+    135deg,
+    #17130f,
+    #0c111a
+  );
+  border-color: rgba(198, 107, 61, 0.45);
+  box-shadow: 0 0 30px rgba(198, 107, 61, 0.09);
+}
+
+.live-item {
+  background: linear-gradient(
+    145deg,
+    #292019,
+    #151923
+  );
+  border-color: rgba(198, 107, 61, 0.3);
+}
+
+.live-item::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #c66b3d,
+    #f0a35e,
+    transparent
+  );
+}
+
+.live-item:hover {
+  border-color: #f0a35e;
+  box-shadow: 0 0 22px rgba(240, 163, 94, 0.2);
+}
+
+.live-label {
+  color: #f0a35e;
+}
+
+.live-item h2 {
+  color: #fff1df;
+  text-shadow: 0 0 12px rgba(240, 163, 94, 0.2);
+}
+
+.live-item .stable-text {
+  color: #f0a35e;
+}
+
+.live-item .normal-text {
+  color: #8fd6a2;
+}
+
+.live-item .danger-text {
+  color: #ff6464;
+}
