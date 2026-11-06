@@ -27,6 +27,8 @@ ChartJS.register(
 );
 
 const THRESHOLD = 705;
+
+
 const MISSION_DAYS = [
   {
     sol: 800,
@@ -55,6 +57,21 @@ function App() {
   const [weatherData, setWeatherData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  // CRITICAL ATMOSPHERIC ALERT CALCULATION
+
+const hasCriticalBreach = weatherData.some(
+  (item) => Number(item.pressure_pa) < THRESHOLD
+);
+
+const criticalReadings = weatherData.filter(
+  (item) => Number(item.pressure_pa) < THRESHOLD
+);
+
+const lowestPressure = weatherData.length > 0
+  ? Math.min(
+      ...weatherData.map((item) => Number(item.pressure_pa))
+    )
+  : null;
 
   useEffect(() => {
     Papa.parse("/simulated_mission_data.csv", {
@@ -253,8 +270,8 @@ const pressureChange = previous
   : "--";
 const chartData = {
   labels: weatherData.map(
-    (item, index) => `OBSERVATION ${index + 1}`
-  ),
+  (item, index) => `SOL ${item.sol} / OBS ${index + 1}`
+),
 
   datasets: [
     {
@@ -328,32 +345,59 @@ const chartData = {
   plugins: {
  annotation: {
   annotations: {
-    criticalThreshold: {
-      type: "line",
-      yMin: 705,
-      yMax: 705,
-      borderColor: "#ff7043",
-      borderWidth: 2,
-      borderDash: [8, 5],
-      label: {
-        display: true,
-        content: "CRITICAL LIMIT — 705 Pa",
-        position: "end",
-        backgroundColor: "#7c2d12",
-        color: "#ffffff",
-        font: {
-          size: 11,
-          weight: "bold",
-        },
-        padding: 6,
+  criticalThreshold: {
+    type: "line",
+    yMin: 705,
+    yMax: 705,
+    borderColor: "#ff7043",
+    borderWidth: 2,
+    borderDash: [8, 5],
+    label: {
+      display: true,
+      content: "CRITICAL LIMIT — 705 Pa",
+      position: "end",
+      backgroundColor: "#7c2d12",
+      color: "#ffffff",
+      font: {
+        size: 11,
+        weight: "bold",
       },
+      padding: 6,
     },
   },
+
+  firstBreach: {
+    type: "line",
+    xMin: weatherData.findIndex(
+      item => Number(item.pressure_pa) < THRESHOLD
+    ),
+    xMax: weatherData.findIndex(
+      item => Number(item.pressure_pa) < THRESHOLD
+    ),
+    borderColor: "#ff7043",
+    borderWidth: 2,
+    borderDash: [4, 4],
+    label: {
+      display: weatherData.some(
+        item => Number(item.pressure_pa) < THRESHOLD
+      ),
+      content: "FIRST PRESSURE BREACH",
+      position: "start",
+      backgroundColor: "#7c2d12",
+      color: "#ffffff",
+      font: {
+        size: 10,
+        weight: "bold",
+      },
+      padding: 6,
+    },
+  },
+},
 },
   legend: {
     position: "top",
     labels: {
-      color: "#cbd5e1",
+      color: "#d6b6a0",
       usePointStyle: true,
       pointStyle: "circle",
       padding: 20,
@@ -361,10 +405,10 @@ const chartData = {
   },
 
   tooltip: {
-    backgroundColor: "#0b1424",
-    titleColor: "#38bdf8",
+    backgroundColor: "#211711",
+    titleColor: "#e6a16f",
     bodyColor: "#ffffff",
-    borderColor: "#38bdf8",
+    borderColor: "#e6a16f",
     borderWidth: 1,
     padding: 14,
   },
@@ -374,7 +418,7 @@ const chartData = {
       title: {
         display: true,
         text: "OBSERVATION SEQUENCE",
-        color: "#38bdf8",
+        color: "#e6a16f",
         font: {
           size: 12,
           weight: "bold",
@@ -382,7 +426,7 @@ const chartData = {
       },
 
       ticks: {
-        color: "#94a3b8",
+        color: "#b99b89",
       },
 
       grid: {
@@ -434,9 +478,7 @@ const chartData = {
       <span> / MARS EXPLORATION</span>
     </div>
 
-    <h1>
-      MARS <span>//</span> MISSION CONTROL
-    </h1>
+    <h1>MARS MISSION CONTROL — TEST</h1>
 
     <p className="mission-subtitle">
       Atmospheric Monitoring & Environmental Intelligence
@@ -470,18 +512,6 @@ const chartData = {
 
 </header>
 
-      {stormWarning && (
-        <div className="storm-warning">
-          <span className="warning-symbol">!</span>
-          <div>
-            <h2>STORM WARNING</h2>
-            <p>
-              Atmospheric pressure has dropped below
-              the critical threshold of 705 Pa.
-            </p>
-          </div>
-        </div>
-      )}
 
       {loading ? (
         <div className="loading-panel">
@@ -493,6 +523,29 @@ const chartData = {
         </div>
       ) : (
         <>
+          {stormWarning && (
+  <div className="critical-alert-banner">
+    <div className="critical-alert-icon">⚠</div>
+
+    <div className="critical-alert-content">
+      <strong>CRITICAL ATMOSPHERIC ALERT</strong>
+
+      <p>
+        Pressure has dropped below the 705 Pa safety threshold.
+      </p>
+
+      <span>
+        LOWEST RECORDED PRESSURE:{" "}
+        {lowestPressure.toFixed(2)} Pa
+      </span>
+    </div>
+
+    <div className="critical-alert-status">
+      THRESHOLD BREACHED
+    </div>
+  </div>
+)}
+
           <div className="simulation-banner">
   <span className="simulation-indicator"></span>
   <strong>SIMULATED SCENARIO DATA</strong>
@@ -658,74 +711,166 @@ const chartData = {
   </div>
 
   <div className="mission-days-grid">
-    {missionDayRecords.map((day) => (
-      <article
-        className={`mission-day-card ${day.severity} ${
-          activeMissionDay?.sol === day.sol ? "active-day" : ""
-        }`}
-        key={day.sol}
-      >
-        <p className="eyebrow">{day.phase}</p>
+  {missionDayRecords.map((day) => (
+    <article
+      className={`mission-day-card ${day.severity} ${
+        activeMissionDay?.sol === day.sol ? "active-day" : ""
+      }`}
+      key={day.sol}
+    >
+      <div className="mission-card-top">
+        <p className="eyebrow">{day.phase} / MISSION LOG</p>
+        <span className={`mission-card-indicator ${day.severity}`}>
+          {day.severity === "nominal"
+            ? "NOMINAL"
+            : day.severity === "warning"
+              ? "WARNING"
+              : "CRITICAL"}
+        </span>
+      </div>
 
-        <h3>SOL {day.sol}</h3>
+      <h3>SOL {day.sol}</h3>
+      <h4>{day.condition}</h4>
 
-        <h4>{day.condition}</h4>
+      <div className={`severity-indicator ${day.severity}`}>
+        <span className="severity-dot"></span>
+        {day.severity === "nominal"
+          ? "LOW SEVERITY"
+          : day.severity === "warning"
+            ? "MODERATE SEVERITY"
+            : "SEVERE CONDITIONS"}
+      </div>
 
-        <div className={`severity-indicator ${day.severity}`}>
-  <span className="severity-dot"></span>
-  {day.severity === "nominal"
-    ? "LOW SEVERITY"
-    : day.severity === "warning"
-      ? "MODERATE SEVERITY"
-      : "SEVERE CONDITIONS"}
-</div>
-<div className={`intensity-meter ${day.severity}`}>
-  <div className="intensity-track">
-    <div className="intensity-fill"></div>
-  </div>
-  <span>
-    {day.severity === "nominal"
-      ? "LEVEL 1 / 3"
-      : day.severity === "warning"
-        ? "LEVEL 2 / 3"
-        : "LEVEL 3 / 3"}
-  </span>
-</div>
+      <div className={`intensity-meter ${day.severity}`}>
+        <div className="intensity-track">
+          <div className="intensity-fill"></div>
+        </div>
+        <span>
+          {day.severity === "nominal"
+            ? "LEVEL 1 / 3"
+            : day.severity === "warning"
+              ? "LEVEL 2 / 3"
+              : "LEVEL 3 / 3"}
+        </span>
+      </div>
 
-        <p>{day.description}</p>
+      <p className="mission-card-description">
+        {day.description}
+      </p>
 
-        <div className="day-divider"></div>
+      <div className="day-divider"></div>
 
+      <div className="mission-metric">
         <span>OBSERVATIONS</span>
         <strong>{day.recordCount}</strong>
+      </div>
+
+      <div className="mission-metric">
         <span>MINIMUM PRESSURE</span>
-<strong
-  className={
-    day.minPressure === null
-      ? "pressure-pending"
-      : day.minPressure < THRESHOLD
-        ? "pressure-danger"
-        : "pressure-safe"
-  }
->
-  {day.minPressure !== null
-    ? `${day.minPressure.toFixed(2)} Pa`
-    : "AWAITING DATA"}
-</strong>
-
-        <span>THRESHOLD STATUS</span>
-        <strong>
-          {day.status}
+        <strong
+          className={
+            day.minPressure === null
+              ? "pressure-pending"
+              : day.minPressure < THRESHOLD
+                ? "pressure-danger"
+                : "pressure-safe"
+          }
+        >
+          {day.minPressure !== null
+            ? `${day.minPressure.toFixed(2)} Pa`
+            : "AWAITING DATA"}
         </strong>
+      </div>
 
-        {day.firstBreachIndex !== -1 && (
-          <p className="breach-marker">
-            FIRST BREACH: OBSERVATION {day.firstBreachIndex + 1}
-          </p>
-        )}
+      <div className="mission-metric">
+        <span>THRESHOLD STATUS</span>
+        <strong>{day.status}</strong>
+      </div>
+
+      {day.firstBreachIndex !== -1 && (
+        <div className="breach-marker">
+          <span>⚠</span>
+          FIRST BREACH: OBSERVATION {day.firstBreachIndex + 1}
+        </div>
+      )}
+
+      <div className="mission-card-footer">
+        <span>MARS ENVIRONMENTAL SYSTEM</span>
+        <span>0{MISSION_DAYS.findIndex(d => d.sol === day.sol) + 1}</span>
+      </div>
+    </article>
+  ))}
+</div>
+
+<section className="storm-comparison-panel">
+
+  <div className="storm-section-header">
+    <div>
+      <p className="eyebrow">ATMOSPHERIC INTELLIGENCE / 03</p>
+      <h2>STORM PROGRESSION ANALYSIS</h2>
+      <p>Comparative analysis of three simulated Martian scenarios</p>
+    </div>
+
+    <div className="storm-threshold-label">
+      <span></span>
+      SAFETY LIMIT: 705 Pa
+    </div>
+  </div>
+
+  <div className="storm-comparison-grid">
+    {missionDayRecords.map((day, index) => (
+      <article
+        className={`storm-comparison-card ${day.severity}`}
+        key={day.sol}
+      >
+        <div className="storm-card-heading">
+          <span>SCENARIO 0{index + 1}</span>
+          <span className={`storm-status ${day.severity}`}>
+            {day.severity.toUpperCase()}
+          </span>
+        </div>
+
+        <h3>SOL {day.sol}</h3>
+        <h4>{day.condition}</h4>
+
+        <div className="storm-pressure-display">
+          <span>MINIMUM PRESSURE</span>
+          <strong>
+            {day.minPressure !== null
+              ? `${day.minPressure.toFixed(2)}`
+              : "--"}
+            <small> Pa</small>
+          </strong>
+        </div>
+
+        <div className="storm-threshold-track">
+          <div
+            className={`storm-pressure-fill ${day.severity}`}
+            style={{
+              width: day.minPressure !== null
+                ? `${Math.min(
+                    100,
+                    Math.max(0, (day.minPressure / THRESHOLD) * 100)
+                  )}%`
+                : "0%"
+            }}
+          ></div>
+        </div>
+
+        <div className="storm-card-footer">
+          <span>THRESHOLD STATUS</span>
+          <strong>{day.status}</strong>
+        </div>
       </article>
     ))}
   </div>
+
+  <p className="storm-comparison-disclaimer">
+    SIMULATED SCENARIO DATA — NOT ACTUAL NASA TELEMETRY
+  </p>
+
+</section>
+
 </section>
 
 <section className="comparison-panel">
@@ -906,27 +1051,112 @@ const chartData = {
 
   </div>
 </section>
+<section className="chart-panel">
 
-          <section className="chart-panel">
-            <div className="panel-heading">
-              <div>
-                <p className="eyebrow">ENVIRONMENTAL TELEMETRY</p>
-                <h2>ATMOSPHERIC PRESSURE ANALYSIS</h2>
-              </div>
-              <span className="unit-label">UNIT: Pa</span>
-            </div>
+  <div className="chart-panel-header">
+    <div>
+      <p className="eyebrow">MISSION TELEMETRY / ATMOSPHERIC INTELLIGENCE</p>
+      <h2>PRESSURE MONITORING SYSTEM</h2>
+      <p className="chart-subtitle">
+        Atmospheric pressure variation across mission observations
+      </p>
+    </div>
 
-            <div className="chart-container">
-              <Line data={chartData} options={chartOptions} />
-            </div>
+    <div className="chart-live-status">
+      <span className="chart-live-dot"></span>
+      TELEMETRY LOADED
+    </div>
+  </div>
 
-            <div className="chart-footer">
-              <span>— Pressure readings</span>
-              <span className="threshold-label">
-                - - Warning threshold: 705 Pa
-              </span>
-            </div>
-          </section>
+  <div className="chart-metadata">
+    <div>
+      <span>OBSERVATIONS</span>
+      <strong>{weatherData.length}</strong>
+    </div>
+
+    <div>
+      <span>SAFETY THRESHOLD</span>
+      <strong>705.00 Pa</strong>
+    </div>
+
+    <div>
+      <span>MONITORED SOLS</span>
+      <strong>800 / 850 / 910</strong>
+    </div>
+  </div>
+
+  <div className="chart-container">
+    <Line data={chartData} options={chartOptions} />
+  </div>
+
+  <div className="chart-footer">
+    <span>
+      <i className="chart-legend-pressure"></i>
+      Atmospheric pressure
+    </span>
+
+    <span>
+      <i className="chart-legend-danger"></i>
+      Critical threshold: 705 Pa
+    </span>
+
+    <span className="chart-footer-note">
+      SIMULATED MISSION SCENARIOS
+    </span>
+  </div>
+
+</section>
+
+<section className="mission-intelligence-panel">
+
+  <div className="intelligence-heading">
+    <p className="eyebrow">MISSION CONTROL / SYSTEM REPORT</p>
+    <h2>MISSION INTELLIGENCE SUMMARY</h2>
+    <p>Automated analysis of Martian atmospheric conditions</p>
+  </div>
+
+  <div className="intelligence-grid">
+
+    <div className="intelligence-card">
+      <span>TOTAL OBSERVATIONS</span>
+      <strong>{weatherData.length}</strong>
+      <small>Recorded telemetry points</small>
+    </div>
+
+    <div className="intelligence-card">
+      <span>CRITICAL READINGS</span>
+      <strong>{criticalReadings.length}</strong>
+      <small>Below 705 Pa threshold</small>
+    </div>
+
+    <div className="intelligence-card">
+      <span>FIRST BREACH</span>
+      <strong>
+        {criticalReadings.length > 0
+          ? `SOL ${criticalReadings[0].sol}`
+          : "NO BREACH"}
+      </strong>
+      <small>First critical observation</small>
+    </div>
+
+    <div className="intelligence-card">
+      <span>LOWEST PRESSURE</span>
+      <strong>
+        {lowestPressure !== null
+          ? `${lowestPressure.toFixed(2)} Pa`
+          : "--"}
+      </strong>
+      <small>Minimum recorded pressure</small>
+    </div>
+
+  </div>
+
+  <p className="intelligence-disclaimer">
+    SIMULATED MISSION SCENARIOS — NOT ACTUAL NASA TELEMETRY
+  </p>
+
+</section>
+
           <section className="event-panel">
   <div className="panel-heading">
     <div>

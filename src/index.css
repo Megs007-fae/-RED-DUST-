@@ -2332,3 +2332,771 @@ body {
   white-space: nowrap;
   letter-spacing: 1px;
 }
+/* CRITICAL ATMOSPHERIC ALERT */
+
+/* MARS COMMAND CENTRE — CRITICAL ALERT */
+
+.critical-alert-banner {
+  display: grid;
+  grid-template-columns: 65px 1fr auto;
+  gap: 20px;
+  align-items: start;
+  position: relative;
+  overflow: hidden;
+
+  padding: 28px;
+  margin: 24px 0;
+
+  background:
+    linear-gradient(120deg, #160f0d 0%, #302019 55%, #1b1110 100%);
+
+  border: 1px solid #86513b;
+  border-left: 5px solid #d18a59;
+  border-radius: 14px;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+}
+
+.critical-alert-banner::before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #d18a59, #75412d, transparent);
+}
+
+.critical-alert-icon {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #42271d;
+  border: 1px solid #a96847;
+  color: #f0ae79;
+  font-size: 34px;
+}
+
+.critical-alert-content {
+  min-width: 0;
+}
+
+.alert-eyebrow {
+  color: #c58b69;
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.critical-alert-content h2 {
+  color: #f0b181;
+  font-size: 24px;
+  letter-spacing: 1px;
+  margin: 10px 0;
+}
+
+.critical-alert-content p {
+  color: #c6a99a;
+  font-size: 13px;
+  margin-bottom: 22px;
+}
+
+.alert-statistics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.alert-stat {
+  padding: 17px 14px;
+  background: linear-gradient(145deg, #38251d, #211713);
+  border: 1px solid #62402f;
+  border-radius: 10px;
+}
+
+.alert-stat span {
+  display: block;
+  color: #b9947c;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.alert-stat strong {
+  color: #edaa78;
+  font-size: 20px;
+}
+
+.alert-stat:first-child {
+  background: linear-gradient(145deg, #583322, #352017);
+  border-color: #bd7952;
+}
+
+.alert-stat:first-child strong {
+  color: #ffc18d;
+  font-size: 25px;
+}
+
+.critical-alert-status {
+  padding: 10px 13px;
+  background: #493022;
+  border: 1px solid #a96847;
+  border-radius: 6px;
+  color: #f0b181;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+@media (max-width: 950px) {
+  .critical-alert-banner {
+    grid-template-columns: 55px 1fr;
+  }
+
+  .critical-alert-status {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .alert-statistics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 550px) {
+  .critical-alert-banner {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .critical-alert-status {
+    grid-column: 1;
+  }
+
+  .alert-statistics {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+/* =================================
+   MARS MISSION TIMELINE — REDESIGN
+================================= */
+
+.mission-days-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 25px;
+}
+
+.mission-day-card {
+  position: relative;
+  overflow: hidden;
+  padding: 25px;
+  background: linear-gradient(145deg, #251a15, #17110f);
+  border: 1px solid #59402f;
+  border-radius: 14px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.mission-day-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #a8c98c;
+}
+
+.mission-day-card.warning::before {
+  background: #d99a64;
+}
+
+.mission-day-card.critical::before {
+  background: #bd7952;
+}
+
+.mission-day-card:hover {
+  transform: translateY(-6px);
+  border-color: #b87952;
+}
+
+.mission-day-card.active-day {
+  border-color: #e0a16d;
+  box-shadow: 0 0 22px rgba(224, 161, 109, 0.13);
+}
+
+.mission-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.mission-card-indicator {
+  padding: 6px 9px;
+  border-radius: 5px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: rgba(168, 201, 140, 0.12);
+  color: #a8c98c;
+}
+
+.mission-card-indicator.warning {
+  background: rgba(217, 154, 100, 0.12);
+  color: #d99a64;
+}
+
+.mission-card-indicator.critical {
+  background: rgba(189, 121, 82, 0.16);
+  color: #e6a16f;
+}
+
+.mission-day-card h3 {
+  font-size: 35px;
+  letter-spacing: 2px;
+  color: #f0b181;
+  margin: 18px 0 5px;
+}
+
+.mission-day-card h4 {
+  color: #d6a080;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+
+.mission-card-description {
+  color: #b99b89;
+  font-size: 12px;
+  line-height: 1.7;
+  min-height: 40px;
+  margin-top: 15px;
+}
+
+.mission-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 11px;
+  margin-bottom: 8px;
+  background: rgba(10, 8, 7, 0.4);
+  border: 1px solid rgba(135, 92, 66, 0.22);
+  border-radius: 7px;
+}
+
+.mission-metric span {
+  color: #b9947c;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.mission-metric strong {
+  color: #e6b18d;
+  font-size: 13px;
+  text-align: right;
+}
+
+.mission-card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 13px;
+  border-top: 1px solid rgba(135, 92, 66, 0.3);
+  color: #8f7160;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.breach-marker {
+  padding: 11px;
+  margin-top: 12px;
+  background: rgba(189, 121, 82, 0.12);
+  border: 1px solid rgba(189, 121, 82, 0.4);
+  border-radius: 7px;
+  color: #e6a16f;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+@media (max-width: 950px) {
+  .mission-days-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .mission-days-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* STORM PROGRESSION ANALYSIS */
+
+.storm-comparison-panel {
+  margin: 35px 0;
+  padding: 30px;
+  background: linear-gradient(145deg, #211711, #130f0d);
+  border: 1px solid #63432f;
+  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.storm-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.storm-section-header h2 {
+  color: #f0b181;
+  font-size: 25px;
+  letter-spacing: 1.5px;
+  margin: 10px 0;
+}
+
+.storm-section-header p:not(.eyebrow) {
+  color: #b99b89;
+  font-size: 12px;
+}
+
+.storm-threshold-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 15px;
+  background: rgba(189, 121, 82, 0.12);
+  border: 1px solid #8d5a3c;
+  border-radius: 7px;
+  color: #e6a16f;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.storm-threshold-label span {
+  width: 8px;
+  height: 8px;
+  background: #e6a16f;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #e6a16f;
+}
+
+.storm-comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.storm-comparison-card {
+  padding: 22px;
+  background: linear-gradient(145deg, #302019, #1b1310);
+  border: 1px solid #59402f;
+  border-radius: 12px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.storm-comparison-card:hover {
+  transform: translateY(-5px);
+  border-color: #c58b69;
+}
+
+.storm-card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  color: #a98a75;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.storm-status {
+  padding: 5px 8px;
+  border-radius: 4px;
+  background: rgba(168, 201, 140, 0.12);
+  color: #a8c98c;
+  font-weight: 800;
+}
+
+.storm-status.warning {
+  background: rgba(217, 154, 100, 0.13);
+  color: #d99a64;
+}
+
+.storm-status.critical {
+  background: rgba(189, 121, 82, 0.16);
+  color: #e6a16f;
+}
+
+.storm-comparison-card h3 {
+  margin: 22px 0 5px;
+  color: #f0b181;
+  font-size: 30px;
+  letter-spacing: 2px;
+}
+
+.storm-comparison-card h4 {
+  color: #d6a080;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.storm-pressure-display {
+  margin-top: 25px;
+}
+
+.storm-pressure-display > span {
+  display: block;
+  color: #a98a75;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.storm-pressure-display strong {
+  color: #edb58e;
+  font-size: 29px;
+}
+
+.storm-pressure-display small {
+  font-size: 13px;
+  color: #b99b89;
+}
+
+.storm-threshold-track {
+  height: 7px;
+  margin-top: 17px;
+  overflow: hidden;
+  background: #49352a;
+  border-radius: 10px;
+}
+
+.storm-pressure-fill {
+  height: 100%;
+  background: #a8c98c;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.storm-pressure-fill.warning {
+  background: #d99a64;
+}
+
+.storm-pressure-fill.critical {
+  background: #bd7952;
+}
+
+.storm-card-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(135, 92, 66, 0.3);
+}
+
+.storm-card-footer span {
+  color: #a98a75;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.storm-card-footer strong {
+  color: #e6a16f;
+  font-size: 10px;
+  text-align: right;
+}
+
+.storm-comparison-disclaimer {
+  margin-top: 22px;
+  color: #a98a75;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  text-align: right;
+}
+
+@media (max-width: 850px) {
+  .storm-comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .storm-section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 550px) {
+  .storm-comparison-panel {
+    padding: 18px;
+  }
+
+  .storm-section-header h2 {
+    font-size: 20px;
+  }
+}
+/* MARS TELEMETRY CHART PANEL */
+
+.chart-panel {
+  position: relative;
+  padding: 30px;
+  margin: 30px 0;
+  background: linear-gradient(145deg, #251a15, #15100e);
+  border: 1px solid #63432f;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.chart-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 23px;
+  border-bottom: 1px solid rgba(198, 107, 61, 0.2);
+}
+
+.chart-panel-header h2 {
+  color: #f0b181;
+  font-size: 25px;
+  letter-spacing: 1.5px;
+  margin: 10px 0;
+}
+
+.chart-subtitle {
+  color: #b99b89;
+  font-size: 12px;
+}
+
+.chart-live-status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 13px;
+  border: 1px solid #765039;
+  border-radius: 6px;
+  background: rgba(198, 107, 61, 0.1);
+  color: #e6a16f;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.chart-live-dot {
+  width: 8px;
+  height: 8px;
+  background: #a8c98c;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(168, 201, 140, 0.7);
+}
+
+.chart-metadata {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 23px 0;
+}
+
+.chart-metadata > div {
+  padding: 16px;
+  background: rgba(10, 8, 7, 0.4);
+  border: 1px solid rgba(135, 92, 66, 0.3);
+  border-radius: 9px;
+}
+
+.chart-metadata span {
+  display: block;
+  color: #a98a75;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.chart-metadata strong {
+  color: #edb58e;
+  font-size: 20px;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  padding: 18px 8px;
+  background: rgba(10, 8, 7, 0.25);
+  border: 1px solid rgba(135, 92, 66, 0.2);
+  border-radius: 10px;
+}
+
+.chart-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-top: 22px;
+  padding-top: 17px;
+  border-top: 1px solid rgba(135, 92, 66, 0.25);
+}
+
+.chart-footer > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #b99b89;
+  font-size: 10px;
+}
+
+.chart-legend-pressure,
+.chart-legend-danger {
+  display: inline-block;
+  width: 19px;
+  height: 3px;
+  background: #c66b3d;
+}
+
+.chart-legend-danger {
+  background: #ff7043;
+}
+
+.chart-footer .chart-footer-note {
+  margin-left: auto;
+  color: #d18a59;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 700px) {
+  .chart-panel {
+    padding: 18px;
+  }
+
+  .chart-panel-header {
+    flex-direction: column;
+  }
+
+  .chart-metadata {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-container {
+    height: 280px;
+  }
+
+  .chart-footer .chart-footer-note {
+    margin-left: 0;
+  }
+}
+/* MISSION INTELLIGENCE SUMMARY */
+
+.mission-intelligence-panel {
+  margin: 30px 0;
+  padding: 30px;
+  background: linear-gradient(145deg, #251a15, #15100e);
+  border: 1px solid #63432f;
+  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.intelligence-heading {
+  margin-bottom: 25px;
+}
+
+.intelligence-heading h2 {
+  color: #f0b181;
+  font-size: 24px;
+  letter-spacing: 1.5px;
+  margin: 10px 0;
+}
+
+.intelligence-heading > p:last-child {
+  color: #b99b89;
+  font-size: 12px;
+}
+
+.intelligence-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.intelligence-card {
+  position: relative;
+  overflow: hidden;
+  padding: 22px 18px;
+  background: linear-gradient(145deg, #38251d, #211713);
+  border: 1px solid #62402f;
+  border-radius: 11px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.intelligence-card:hover {
+  transform: translateY(-5px);
+  border-color: #d18a59;
+}
+
+.intelligence-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #d18a59, transparent);
+}
+
+.intelligence-card span {
+  display: block;
+  color: #b9947c;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 17px;
+}
+
+.intelligence-card strong {
+  display: block;
+  color: #f0b181;
+  font-size: 25px;
+  margin-bottom: 10px;
+  overflow-wrap: anywhere;
+}
+
+.intelligence-card small {
+  color: #a98a75;
+  font-size: 10px;
+}
+
+.intelligence-disclaimer {
+  margin-top: 25px;
+  color: #c58b69;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  text-align: right;
+}
+
+@media (max-width: 950px) {
+  .intelligence-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 550px) {
+  .mission-intelligence-panel {
+    padding: 19px;
+  }
+
+  .intelligence-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .intelligence-heading h2 {
+    font-size: 20px;
+  }
+}
