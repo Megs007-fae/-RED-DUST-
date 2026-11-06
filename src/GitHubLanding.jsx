@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import "./GitHubLanding.css";
 
 function GitHubLanding() {
+  const [buildPending, setBuildPending] = useState(false);
   return (
     <div className="landing-page">
 
@@ -46,14 +47,18 @@ function GitHubLanding() {
         </p>
 
         <div className="hero-buttons">
-          <a href="#download" className="primary-btn">
-            DOWNLOAD GAME ↓
-          </a>
+  <a href="#download" className="primary-btn">
+    DOWNLOAD GAME ↓
+  </a>
 
-          <a href="#overview" className="secondary-btn">
-            EXPLORE PROJECT →
-          </a>
-        </div>
+  <a href="#overview" className="secondary-btn">
+    EXPLORE PROJECT →
+  </a>
+
+  <Link to="/dashboard" className="secondary-btn">
+    LAUNCH MISSION CONTROL ↗
+  </Link>
+</div>
 
         <div className="hero-coordinate">
           MISSION STATUS: ACTIVE
@@ -73,6 +78,10 @@ function GitHubLanding() {
           brings planetary science and technology together
           to make Mars exploration more engaging and accessible.
         </p>
+        <small className="data-source-note">
+         DATA SOURCE: NASA PDS Curiosity REMS (Sol 4710)
+        </small>
+        
       </section>
       
 {/* MISSION CAPABILITIES */}
@@ -190,12 +199,17 @@ function GitHubLanding() {
     </div>
 
     <a
-      href="/downloads/MarsMission.exe"
-      className="download-btn"
-      download
-    >
-      ↓ DOWNLOAD .EXE
-    </a>
+  href="#download"
+  className="download-btn"
+  onClick={(e) => {
+    e.preventDefault();
+    setBuildPending(true);
+  }}
+>
+  {buildPending
+    ? "BUILD PENDING // NOV 14"
+    : "↓ DOWNLOAD .EXE"}
+</a>
 
     <small>EXECUTABLE BUILD / RELEASE STATUS: PENDING</small>
 

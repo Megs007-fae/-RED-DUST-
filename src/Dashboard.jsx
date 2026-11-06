@@ -42,14 +42,18 @@ function App() {
 
       complete: (result) => {
         const validData = result.data.filter(
-          (item) =>
-            Number.isFinite(Number(item.sol)) &&
-            Number.isFinite(Number(item.pressure_pa))
-        );
+  (item) =>
+    item.sol !== undefined &&
+    item.sol !== null &&
+    item.sol !== "" &&
+    Number.isFinite(Number(item.sol)) &&
+    Number.isFinite(Number(item.pressure_pa))
+);
 
-        setWeatherData(
-          validData.sort((a, b) => a.sol - b.sol)
-        );
+// Preserve the original CSV row order
+setWeatherData(validData);
+
+console.log("LAST CSV ROW:", validData[validData.length - 1]);
         setLoading(false);
       },
 
@@ -85,20 +89,23 @@ const pressureDifferenceText =
 const pressureStatus = latest
   ? Number(latest.pressure_pa) < THRESHOLD
     ? "BELOW CRITICAL LIMIT"
-    : "WITHIN THRESHOLD"
+    : Number(latest.pressure_pa) === THRESHOLD
+      ? "CRITICAL THRESHOLD REACHED"
+      : "WITHIN THRESHOLD"
   : "WAITING FOR DATA";
+
   const pressureStatusClass =
   pressureDifference === null
     ? "stable-text"
-    : pressureDifference < 0
+    : pressureDifference <= 0
     ? "danger-text"
     : "normal-text";
 
 const pressureStatusIcon =
   pressureDifference === null
     ? "●"
-    : pressureDifference < 0
-    ? "▼"
+    : pressureDifference <= 0
+    ? "⚠"
     : "▲";
 
 const pressureDifferenceClass =
@@ -144,8 +151,8 @@ console.log("Storm warning:", stormWarning);
     ? "danger-text"
     : "normal-text";
 
-  const missionEvents = weatherData.map((item) => ({
-  sol: item.sol,
+  const missionEvents = weatherData.map((item, index) => ({
+  observation: index + 1,
   pressure: Number(item.pressure_pa),
   status:
     Number(item.pressure_pa) < 705
@@ -174,7 +181,9 @@ const pressureChange = previous
     ).toFixed(2)
   : "--";
 const chartData = {
-  labels: weatherData.map((item) => `SOL ${item.sol}`),
+  labels: weatherData.map(
+    (item, index) => `OBSERVATION ${index + 1}`
+  ),
 
   datasets: [
     {
@@ -244,20 +253,6 @@ const chartData = {
  const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
-
-  annotation: {
-  annotations: {
-    dangerZone: {
-  type: "box",
-  yMin: 700,
-  yMax: 705,
-  backgroundColor: "rgba(239, 68, 68, 0.12)",
-  borderWidth: 0,
-  drawTime: "beforeDatasetsDraw",
-},
-  },
-},
-
   animation: {
     duration: 1800,
     easing: "easeInOutQuart",
@@ -269,70 +264,55 @@ const chartData = {
   },
 
   plugins: {
-      annotation: {
+  annotation: {
     annotations: {
+      safeZone: {
+        type: "box",
+        yScaleID: "y",
+        xScaleID: "x",
+        yMin: 705,
+        yMax: 706,
+        backgroundColor: "rgba(34, 197, 94, 0.30)",
+        borderWidth: 0,
+        drawTime: "beforeDatasetsDraw",
+      },
       dangerZone: {
-  type: "box",
-  yMin: 704,
-  yMax: 705,
-  backgroundColor: "rgba(239, 68, 68, 0.18)",
-  borderWidth: 0,
-  drawTime: "beforeDatasetsDraw",
-},
-    },
-  },
-    legend: {
-      position: "top",
-      labels: {
-        color: "#cbd5e1",
-        usePointStyle: true,
-        pointStyle: "circle",
-        padding: 20,
-        font: {
-          size: 12,
-          weight: "bold",
-        },
+        type: "box",
+        yScaleID: "y",
+        xScaleID: "x",
+        yMin: 704,
+        yMax: 705,
+        backgroundColor: "rgba(239, 68, 68, 0.30)",
+        borderWidth: 0,
+        drawTime: "beforeDatasetsDraw",
       },
     },
-
-    tooltip: {
-      y: {
-  min: 704,
-  max: 706,
-
-  title: {
-    display: true,
-    text: "ATMOSPHERIC PRESSURE (Pa)",
-    color: "#38bdf8",
   },
 
-  ticks: {
-    stepSize: 0.1,
-    precision: 1,
-    color: "#cbd5e1",
-    callback: (value) => `${Number(value).toFixed(1)} Pa`,
-  },
-
-  grid: {
-    color: "rgba(148,163,184,0.15)",
-  },
-},
-      backgroundColor: "#0b1424",
-      titleColor: "#38bdf8",
-      bodyColor: "#ffffff",
-      borderColor: "#38bdf8",
-      borderWidth: 1,
-      padding: 14,
-      cornerRadius: 8,
-      displayColors: true,
+  legend: {
+    position: "top",
+    labels: {
+      color: "#cbd5e1",
+      usePointStyle: true,
+      pointStyle: "circle",
+      padding: 20,
     },
   },
 
+  tooltip: {
+    backgroundColor: "#0b1424",
+    titleColor: "#38bdf8",
+    bodyColor: "#ffffff",
+    borderColor: "#38bdf8",
+    borderWidth: 1,
+    padding: 14,
+  },
+},
   scales: {
     x: {
       title: {
         display: true,
-        text: "MARTIAN SOL",
+        text: "OBSERVATION SEQUENCE",
         color: "#38bdf8",
         font: {
           size: 12,
@@ -393,7 +373,7 @@ const chartData = {
     </p>
 
     <div className="mission-meta">
-      <span>MISSION ID: MARS-ATM-001</span>
+      <span>MISSION ID: AREON-PRD-01</span>
       <span>PLANET: MARS</span>
       <span>MONITORING: PRESSURE</span>
     </div>
@@ -524,7 +504,7 @@ const chartData = {
   {/* PRESSURE CHANGE GOES HERE */}
   <p className="pressure-change">
     {previous
-      ? `${Number(pressureChange) > 0 ? "+" : ""}${pressureChange} Pa since previous SOL`
+      ? `${Number(pressureChange) > 0 ? "+" : ""}${pressureChange} Pa since previous observation`
       : "Waiting for previous reading"}
   </p>
 </div>
@@ -672,11 +652,13 @@ const chartData = {
     </div>
 
     <div className="environment-item">
-      <p>STORM DETECTION</p>
-      <h3 className={stormWarning ? "danger-text" : "normal-text"}>
-        {stormWarning ? "ACTIVE" : "INACTIVE"}
-      </h3>
-    </div>
+  <p>CURRENT STORM STATUS</p>
+  <h3 className={stormWarning ? "danger-text" : "normal-text"}>
+    {stormWarning
+      ? "ACTIVE WARNING"
+      : `CLEAR (${warningCount} PAST EVENTS)`}
+  </h3>
+</div>
 
     <div className="environment-item">
       <p>TOTAL WARNING EVENTS</p>
@@ -771,7 +753,7 @@ const chartData = {
         <div className="event-details">
           <h3>{event.status}</h3>
           <p>
-            SOL {event.sol} · Pressure: {event.pressure.toFixed(2)} Pa
+              OBSERVATION {event.observation} · Pressure: {event.pressure.toFixed(2)} Pa
           </p>
         </div>
 
