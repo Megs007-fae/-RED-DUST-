@@ -27,6 +27,29 @@ ChartJS.register(
 );
 
 const THRESHOLD = 705;
+const MISSION_DAYS = [
+  {
+    sol: 800,
+    phase: "DAY 01",
+    condition: "CLEAR",
+    description: "Stable atmospheric conditions",
+    severity: "nominal",
+  },
+  {
+    sol: 850,
+    phase: "DAY 02",
+    condition: "MODERATE STORM",
+    description: "Escalating atmospheric disturbance",
+    severity: "warning",
+  },
+  {
+    sol: 910,
+    phase: "DAY 03",
+    condition: "SEVERE STORM",
+    description: "Critical atmospheric conditions",
+    severity: "critical",
+  },
+];
 
 function App() {
   const [weatherData, setWeatherData] = useState([]);
@@ -34,7 +57,7 @@ function App() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    Papa.parse("/weather_data.csv", {
+    Papa.parse("/simulated_mission_data.csv", {
       download: true,
       header: true,
       dynamicTyping: true,
@@ -67,6 +90,54 @@ console.log("LAST CSV ROW:", validData[validData.length - 1]);
   const latest = weatherData.length
     ? weatherData[weatherData.length - 1]
     : null;
+  const activeMissionDay = latest
+  ? MISSION_DAYS.find(
+      (day) => Number(latest.sol) === day.sol
+    )
+  : null;
+
+  const missionProgress = activeMissionDay
+  ? MISSION_DAYS.findIndex(
+      (day) => day.sol === activeMissionDay.sol
+    ) + 1
+  : 0;
+
+const missionProgressLabel =
+  missionProgress === 0
+    ? "AWAITING MISSION DATA"
+    : `MISSION DAY ${missionProgress} / 3`;
+
+const missionDayRecords = MISSION_DAYS.map((day) => {
+  const readings = weatherData.filter(
+    (item) => Number(item.sol) === day.sol
+  );
+
+  const firstBreachIndex = weatherData.findIndex(
+    (item) =>
+      Number(item.sol) === day.sol &&
+      Number(item.pressure_pa) < THRESHOLD
+  );
+
+  return {
+    ...day,
+    recordCount: readings.length,
+    minPressure:
+  readings.length > 0
+    ? Math.min(
+        ...readings.map((item) =>
+          Number(item.pressure_pa)
+        )
+      )
+    : null,
+    firstBreachIndex,
+    status:
+      readings.length === 0
+        ? "AWAITING DATA"
+        : firstBreachIndex !== -1
+          ? "THRESHOLD BREACHED"
+          : "NO BREACH RECORDED",
+  };
+});
   const pressureDifference = latest
   ? Number(latest.pressure_pa) - THRESHOLD
   : null;
@@ -188,55 +259,47 @@ const chartData = {
   datasets: [
     {
       label: "Atmospheric Pressure",
+
       data: weatherData.map(
         (item) => Number(item.pressure_pa)
       ),
 
-      borderColor: "#38bdf8",
-      backgroundColor: "rgba(56, 189, 248, 0.12)",
+      borderColor: "#c66b3d",
+      backgroundColor: "rgba(198, 107, 61, 0.12)",
       borderWidth: 3,
 
       pointRadius: 5,
       pointHoverRadius: 9,
       pointBorderWidth: 2,
       pointBorderColor: "#ffffff",
-      dangerZone: {
-  type: "box",
-  yMin: 704,
-  yMax: 705,
-  backgroundColor: "rgba(239, 68, 68, 0.18)",
-  borderWidth: 0,
-  drawTime: "beforeDatasetsDraw",
-},
 
       pointBackgroundColor: weatherData.map(
         (item) =>
           Number(item.pressure_pa) < THRESHOLD
             ? "#ff3333"
-            : "#38bdf8"
+            : "#f0a35e"
       ),
-      segment: {
-  borderColor: (context) => {
-    const start = context.p0.parsed.y;
-    const end = context.p1.parsed.y;
 
-    return start < THRESHOLD || end < THRESHOLD
-      ? "#ef4444"
-      : "#38bdf8";
-  },
-},
-      
+      segment: {
+        borderColor: (context) => {
+          const start = context.p0.parsed.y;
+          const end = context.p1.parsed.y;
+
+          return start < THRESHOLD || end < THRESHOLD
+            ? "#ef4444"
+            : "#c66b3d";
+        },
+      },
 
       pointHoverBackgroundColor: "#ffffff",
-
       tension: 0.4,
       fill: true,
-
       cubicInterpolationMode: "monotone",
     },
 
     {
       label: "CRITICAL THRESHOLD — 705 Pa",
+
       data: weatherData.map(() => THRESHOLD),
 
       borderColor: "#ff3333",
@@ -249,7 +312,6 @@ const chartData = {
     },
   ],
 };
-
  const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -264,31 +326,30 @@ const chartData = {
   },
 
   plugins: {
-  annotation: {
-    annotations: {
-      safeZone: {
-        type: "box",
-        yScaleID: "y",
-        xScaleID: "x",
-        yMin: 705,
-        yMax: 706,
-        backgroundColor: "rgba(34, 197, 94, 0.30)",
-        borderWidth: 0,
-        drawTime: "beforeDatasetsDraw",
-      },
-      dangerZone: {
-        type: "box",
-        yScaleID: "y",
-        xScaleID: "x",
-        yMin: 704,
-        yMax: 705,
-        backgroundColor: "rgba(239, 68, 68, 0.30)",
-        borderWidth: 0,
-        drawTime: "beforeDatasetsDraw",
+ annotation: {
+  annotations: {
+    criticalThreshold: {
+      type: "line",
+      yMin: 705,
+      yMax: 705,
+      borderColor: "#ff7043",
+      borderWidth: 2,
+      borderDash: [8, 5],
+      label: {
+        display: true,
+        content: "CRITICAL LIMIT — 705 Pa",
+        position: "end",
+        backgroundColor: "#7c2d12",
+        color: "#ffffff",
+        font: {
+          size: 11,
+          weight: "bold",
+        },
+        padding: 6,
       },
     },
   },
-
+},
   legend: {
     position: "top",
     labels: {
@@ -329,27 +390,36 @@ const chartData = {
       },
     },
 
-   y: {
-  min: 704,
-  max: 706,
+  y: {
+  min: Math.floor(
+    Math.min(...weatherData.map(item =>
+      Number(item.pressure_pa)
+    )) * 10
+  ) / 10 - 0.1,
+
+  max: Math.ceil(
+    Math.max(...weatherData.map(item =>
+      Number(item.pressure_pa)
+    )) * 10
+  ) / 10 + 0.1,
 
   title: {
     display: true,
     text: "ATMOSPHERIC PRESSURE (Pa)",
-    color: "#38bdf8",
+    color: "#f0a35e",
   },
 
   ticks: {
     stepSize: 0.1,
     precision: 1,
-    color: "#cbd5e1",
+    color: "#d6b6a0",
     callback: (value) => `${Number(value).toFixed(1)} Pa`,
   },
 
   grid: {
-    color: "rgba(148,163,184,0.15)",
+    color: "rgba(198,107,61,0.15)",
   },
-  },
+},
   },
 };
 
@@ -423,6 +493,35 @@ const chartData = {
         </div>
       ) : (
         <>
+          <div className="simulation-banner">
+  <span className="simulation-indicator"></span>
+  <strong>SIMULATED SCENARIO DATA</strong>
+  <span>
+    Illustrative mission values — NOT actual NASA telemetry
+  </span>
+</div>
+           <div className="mission-progress-panel">
+  <div className="progress-heading">
+    <span>MISSION PROGRESSION</span>
+    <strong>{missionProgressLabel}</strong>
+  </div>
+
+  <div className="progress-track">
+    <div
+      className="progress-fill"
+      style={{
+        width: `${(missionProgress / 3) * 100}%`,
+      }}
+    ></div>
+  </div>
+
+  <div className="progress-labels">
+    <span>SOL 800</span>
+    <span>SOL 850</span>
+    <span>SOL 910</span>
+  </div>
+</div>
+
           <section className="telemetry-grid">
 
             <article className="telemetry-card primary-card">
@@ -533,6 +632,102 @@ const chartData = {
     </div>
   </div>
 </section>
+
+<section className="mission-timeline">
+  <div className="panel-heading">
+    <div>
+      <p className="eyebrow">SURVIVAL PROTOCOL / 72 HOURS</p>
+      <h2>THREE-DAY MISSION TIMELINE</h2>
+    </div>
+
+    <span className="unit-label">3 SOLS / 3 PHASES</span>
+  </div>
+
+  <div className="active-sol-panel">
+    <span className="live-indicator"></span>
+    <div>
+      <p className="eyebrow">CURRENTLY ACTIVE</p>
+      <h2>
+        {activeMissionDay
+          ? `${activeMissionDay.phase} // SOL ${activeMissionDay.sol}`
+          : latest
+            ? `SOL ${latest.sol} // OUTSIDE MISSION DAYS`
+            : "AWAITING TELEMETRY"}
+      </h2>
+    </div>
+  </div>
+
+  <div className="mission-days-grid">
+    {missionDayRecords.map((day) => (
+      <article
+        className={`mission-day-card ${day.severity} ${
+          activeMissionDay?.sol === day.sol ? "active-day" : ""
+        }`}
+        key={day.sol}
+      >
+        <p className="eyebrow">{day.phase}</p>
+
+        <h3>SOL {day.sol}</h3>
+
+        <h4>{day.condition}</h4>
+
+        <div className={`severity-indicator ${day.severity}`}>
+  <span className="severity-dot"></span>
+  {day.severity === "nominal"
+    ? "LOW SEVERITY"
+    : day.severity === "warning"
+      ? "MODERATE SEVERITY"
+      : "SEVERE CONDITIONS"}
+</div>
+<div className={`intensity-meter ${day.severity}`}>
+  <div className="intensity-track">
+    <div className="intensity-fill"></div>
+  </div>
+  <span>
+    {day.severity === "nominal"
+      ? "LEVEL 1 / 3"
+      : day.severity === "warning"
+        ? "LEVEL 2 / 3"
+        : "LEVEL 3 / 3"}
+  </span>
+</div>
+
+        <p>{day.description}</p>
+
+        <div className="day-divider"></div>
+
+        <span>OBSERVATIONS</span>
+        <strong>{day.recordCount}</strong>
+        <span>MINIMUM PRESSURE</span>
+<strong
+  className={
+    day.minPressure === null
+      ? "pressure-pending"
+      : day.minPressure < THRESHOLD
+        ? "pressure-danger"
+        : "pressure-safe"
+  }
+>
+  {day.minPressure !== null
+    ? `${day.minPressure.toFixed(2)} Pa`
+    : "AWAITING DATA"}
+</strong>
+
+        <span>THRESHOLD STATUS</span>
+        <strong>
+          {day.status}
+        </strong>
+
+        {day.firstBreachIndex !== -1 && (
+          <p className="breach-marker">
+            FIRST BREACH: OBSERVATION {day.firstBreachIndex + 1}
+          </p>
+        )}
+      </article>
+    ))}
+  </div>
+</section>
+
 <section className="comparison-panel">
   <h2>PRESSURE THRESHOLD ANALYSIS</h2>
 
