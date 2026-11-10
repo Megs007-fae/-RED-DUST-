@@ -42,7 +42,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDashboard }) => {
             </span>
           </div>
           <p className="text-xs text-slate-400 font-sans max-w-md">
-            Survive Mars. Balance the Power. Read the Data. Built by Unmesh, Sudharsan, Dilli, and m00ny007 during the 48-hour sprint.
+            Survive Mars. Balance the Power. Read the Data. Built by Unmesh, Sudharsan, Dilli, and Meghna during the 48-hour sprint.
           </p>
         </div>
 
