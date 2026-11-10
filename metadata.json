@@ -1,0 +1,6 @@
+{
+  "name": "AREON - Junior Astronaut Mission Trainer",
+  "description": "Survive Mars. Balance the Power. Read the Data. Single-scroll pitch landing page and NASA Curiosity REMS & DONKI Mission Control dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --mars-red: #C1440E;
+    --dark-gray: #1A1A1A;
+    --terminal-green: #00FF00;
+    --warning-yellow: #FFCC00;
+    --font-heading: 'Chakra Petch', sans-serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    background-color: var(--dark-gray);
+    color: #F1F5F9;
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/* Subtle storm warning border & indicator */
+body.storm-warning {
+  box-shadow: inset 0 0 40px rgba(193, 68, 14, 0.25);
+  transition: box-shadow 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom scrollbar for NASA sci-fi aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #111418;
+}
+::-webkit-scrollbar-thumb {
+  background: #2D3748;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C1440E;
+}

@@ -1,0 +1,4 @@
+sol,pressure_pa,solar_flare,storm_status
+800,887,none,SAFE
+852,924,C,WARNING
+2085,772,X,WARNING
