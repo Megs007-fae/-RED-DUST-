@@ -1,0 +1,677 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.landing-page {
+  min-height: 100vh;
+  background: #050912;
+  color: #eafaff;
+  font-family: 'Rajdhani', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* NAVIGATION */
+
+.landing-nav {
+  height: 85px;
+  padding: 0 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 220, 255, 0.15);
+  background: rgba(5, 9, 18, 0.9);
+}
+
+.nav-logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.nav-logo span {
+  color: #00e5ff;
+  margin-right: 8px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 35px;
+}
+
+.nav-links a,
+.github-link {
+  text-decoration: none;
+  color: #9aafc3;
+  font-size: 14px;
+  letter-spacing: 2px;
+  transition: 0.3s;
+}
+
+.nav-links a:hover,
+.github-link:hover {
+  color: #00e5ff;
+}
+
+.github-link {
+  border: 1px solid #00d9ff;
+  padding: 10px 20px;
+  color: #00e5ff;
+}
+
+/* HERO */
+
+.landing-hero {
+  min-height: 650px;
+  padding: 150px 10% 90px;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 80% 45%, rgba(0, 125, 190, 0.19), transparent 40%),
+    radial-gradient(ellipse at 15% 70%, rgba(0, 75, 130, 0.12), transparent 40%),
+    #050912;
+}
+
+.landing-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0, 220, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 220, 255, 0.035) 1px, transparent 1px);
+  background-size: 55px 55px;
+  mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+.hero-tag,
+.section-label {
+  color: #00e5ff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+}
+
+.landing-hero h1 {
+  position: relative;
+  margin-top: 30px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(45px, 7vw, 90px);
+  line-height: 1.2;
+  font-weight: 800;
+  max-width: 1000px;
+}
+
+.landing-hero h1 span {
+  display: block;
+  color: #00d9ff;
+  text-shadow: 0 0 30px rgba(0, 217, 255, 0.25);
+}
+
+.hero-description {
+  max-width: 570px;
+  margin-top: 28px;
+  font-size: 21px;
+  line-height: 1.6;
+  color: #a4b7c9;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 16px 27px;
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  transition: 0.3s;
+}
+
+.primary-btn {
+  background: #00d9ff;
+  color: #031018;
+  font-weight: 800;
+  box-shadow: 0 0 25px rgba(0, 217, 255, 0.2);
+}
+
+.primary-btn:hover {
+  background: white;
+  box-shadow: 0 0 35px #00d9ff;
+}
+
+.secondary-btn {
+  border: 1px solid #17647b;
+  color: #00d9ff;
+}
+
+.secondary-btn:hover {
+  background: rgba(0, 217, 255, 0.1);
+}
+
+.hero-coordinate {
+  margin-top: 90px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #00e5ff;
+}
+
+.hero-coordinate span {
+  color: #657b90;
+}
+
+/* OVERVIEW */
+
+.landing-overview,
+.gameplay-section,
+.download-section {
+  padding: 100px 10%;
+  border-top: 1px solid rgba(0, 220, 255, 0.12);
+}
+
+.landing-overview h2,
+.gameplay-section h2,
+.download-section h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(25px, 4vw, 40px);
+  margin-top: 25px;
+  letter-spacing: 2px;
+}
+
+.landing-overview > p:last-child,
+.download-section > p:not(.section-label) {
+  max-width: 750px;
+  color: #9aafc3;
+  font-size: 20px;
+  line-height: 1.8;
+  margin-top: 25px;
+}
+
+/* SCREENSHOT */
+
+.screenshot-placeholder {
+  margin-top: 45px;
+  width: 100%;
+  min-height: 420px;
+  border: 1px solid rgba(0, 217, 255, 0.5);
+  background:
+    radial-gradient(circle at center, rgba(0, 100, 160, 0.2), transparent 65%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 217, 255, 0.025) 0px,
+      rgba(0, 217, 255, 0.025) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    #080f1d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 0 35px rgba(0, 217, 255, 0.08);
+}
+
+.screenshot-placeholder::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(0, 217, 255, 0.12);
+  pointer-events: none;
+}
+
+.placeholder-content {
+  text-align: center;
+}
+
+.placeholder-content span {
+  color: #00e5ff;
+  font-size: 50px;
+}
+
+.placeholder-content h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 24px;
+  margin: 15px 0;
+}
+
+.placeholder-content p {
+  color: #00d9ff;
+  letter-spacing: 3px;
+  font-size: 13px;
+}
+
+.placeholder-content small {
+  display: block;
+  margin-top: 20px;
+  color: #627c91;
+  letter-spacing: 2px;
+}
+
+/* DOWNLOAD */
+
+.download-section {
+  text-align: center;
+  background:
+    radial-gradient(ellipse at center, rgba(0, 130, 180, 0.12), transparent 70%),
+    #060c17;
+}
+
+.download-btn {
+  display: inline-block;
+  margin-top: 35px;
+  padding: 20px 45px;
+  background: #00d9ff;
+  color: #031018;
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  box-shadow: 0 0 25px rgba(0, 217, 255, 0.25);
+  transition: 0.3s;
+}
+
+.download-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 40px #00d9ff;
+}
+
+.download-section small {
+  display: block;
+  color: #637d91;
+  margin-top: 20px;
+  letter-spacing: 3px;
+}
+
+/* FOOTER */
+
+.landing-footer {
+  padding: 30px 8%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  border-top: 1px solid rgba(0, 220, 255, 0.15);
+  color: #647c91;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .landing-nav {
+    padding: 20px 5%;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .landing-hero {
+    padding: 110px 7% 70px;
+  }
+
+  .landing-overview,
+  .gameplay-section,
+  .download-section {
+    padding: 75px 7%;
+  }
+
+  .screenshot-placeholder {
+    min-height: 280px;
+  }
+
+  .landing-footer {
+    flex-direction: column;
+    padding: 25px 7%;
+  }
+}
+
+/* CINEMATIC ANIMATIONS */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.12);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 217, 255, 0.35);
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-200%);
+  }
+  100% {
+    transform: translateY(500%);
+  }
+}
+
+@keyframes starBlink {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.landing-hero .hero-tag {
+  animation: fadeUp 0.8s ease both;
+}
+
+.landing-hero h1 {
+  animation: fadeUp 1s ease 0.2s both;
+}
+
+.hero-description {
+  animation: fadeUp 1s ease 0.4s both;
+}
+
+.hero-buttons {
+  animation: fadeUp 1s ease 0.6s both;
+}
+
+.hero-coordinate {
+  animation: fadeUp 1s ease 0.8s both;
+}
+
+.screenshot-placeholder {
+  animation: glowPulse 4s infinite ease-in-out;
+  overflow: hidden;
+}
+
+.screenshot-placeholder::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #00e5ff,
+    transparent
+  );
+  opacity: 0.5;
+  animation: scan 5s linear infinite;
+  pointer-events: none;
+}
+
+.placeholder-content span {
+  animation: starBlink 2s infinite;
+}
+
+.primary-btn,
+.download-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.primary-btn:hover,
+.download-btn:hover {
+  letter-spacing: 3px;
+}
+/* MARS GAME PREVIEW */
+
+.mars-preview {
+  background:
+    linear-gradient(
+      0deg,
+      rgba(3, 8, 18, 0.9),
+      rgba(3, 8, 18, 0.15)
+    ),
+    url("https://images.unsplash.com/photo-1614728894747-a83421e2b9c9")
+    center/cover no-repeat;
+
+  min-height: 480px;
+  border: 1px solid rgba(0, 217, 255, 0.5);
+}
+
+.mars-hud {
+  position: absolute;
+  inset: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #00e5ff;
+}
+
+.hud-top,
+.hud-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.hud-center {
+  text-align: center;
+}
+
+.hud-center p {
+  color: #00e5ff;
+  font-size: 12px;
+  letter-spacing: 4px;
+}
+
+.hud-center h3 {
+  font-size: clamp(25px, 5vw, 48px);
+  margin: 15px 0;
+  color: white;
+  text-shadow: 0 0 20px rgba(0, 217, 255, 0.6);
+}
+
+.hud-center span {
+  color: #b4dce8;
+  font-size: 10px;
+}
+
+@media (max-width: 600px) {
+  .mars-hud {
+    inset: 15px;
+    font-size: 8px;
+  }
+
+  .hud-top,
+  .hud-bottom {
+    flex-wrap: wrap;
+  }
+}
+
+/* GAME RELEASE PANEL */
+
+.release-panel {
+  max-width: 650px;
+  margin: 50px auto 0;
+  padding: 45px;
+  text-align: left;
+  border: 1px solid rgba(0, 217, 255, 0.35);
+  background:
+    linear-gradient(135deg, rgba(0, 217, 255, 0.07), transparent 60%),
+    #091321;
+  box-shadow: 0 0 40px rgba(0, 217, 255, 0.08);
+  position: relative;
+}
+
+.release-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #00e5ff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.release-indicator {
+  width: 9px;
+  height: 9px;
+  background: #f0a34a;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #f0a34a;
+}
+
+.release-panel h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 23px;
+  margin: 35px 0;
+  color: white;
+}
+
+.release-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 25px 0;
+  border-top: 1px solid rgba(0, 217, 255, 0.15);
+  border-bottom: 1px solid rgba(0, 217, 255, 0.15);
+}
+
+.release-details span {
+  color: #718ba2;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+}
+
+.release-details strong {
+  color: #c5f5ff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+}
+
+.release-panel .download-btn {
+  display: block;
+  text-align: center;
+  margin-top: 35px;
+}
+
+.release-panel > small {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #f0a34a;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 600px) {
+  .release-panel {
+    padding: 25px 18px;
+  }
+
+  .release-details {
+    gap: 15px;
+  }
+}
+
+/* MISSION CAPABILITIES */
+
+.features-section {
+  padding: 100px 10%;
+  border-top: 1px solid rgba(0, 220, 255, 0.12);
+  background: #070e1a;
+}
+
+.features-section h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(25px, 4vw, 38px);
+  margin-top: 25px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-top: 50px;
+}
+
+.feature-card {
+  padding: 35px;
+  min-height: 230px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 217, 255, 0.07),
+    rgba(5, 12, 25, 0.8)
+  );
+  border: 1px solid rgba(0, 217, 255, 0.18);
+  transition: 0.35s ease;
+  position: relative;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  border-color: #00d9ff;
+  box-shadow: 0 10px 35px rgba(0, 217, 255, 0.13);
+}
+
+.feature-card > span {
+  font-size: 35px;
+  color: #00e5ff;
+}
+
+.feature-card h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 17px;
+  margin: 20px 0 12px;
+}
+
+.feature-card p {
+  color: #91a9bd;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.feature-card small {
+  display: block;
+  margin-top: 25px;
+  color: #00d9ff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 650px) {
+  .features-section {
+    padding: 75px 7%;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
